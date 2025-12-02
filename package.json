@@ -1,0 +1,32 @@
+{
+  "name": "uptask_backend",
+  "version": "1.0.0",
+  "description": "**MERN** stands for **MongoDB, Express, React, Node.js**.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adriancr93/uptask_backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adriancr93/uptask_backend/issues"
+  },
+  "homepage": "https://github.com/adriancr93/uptask_backend#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mongoose": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
