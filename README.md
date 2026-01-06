@@ -125,3 +125,52 @@ It communicates between Model and View. Before the Model queries the database, t
 Responsible for registering all the URLs or Endpoints supported by our application.
 
 Example: If a user accesses a URL, the Router already has instructions to communicate with a specific Controller. That Controller knows which Model to call and which View to execute.
+
+## CRUD Example
+
+CRUD stands for **Create, Read, Update, Delete** — the four basic operations for persistent storage.
+
+Here’s an example of CRUD routes for a `Project` resource in Express:
+
+```typescript
+// src/routes/projectRoutes.ts
+import { Router } from 'express'
+import { ProjectController } from '../controllers/ProjectController'
+
+const router = Router()
+
+// Create a new project
+router.post('/', ProjectController.createProject)
+
+// Read all projects
+router.get('/', ProjectController.getAllProjects)
+
+// Update a project
+router.put('/:id', ProjectController.updateProject)
+
+// Delete a project
+router.delete('/:id', ProjectController.deleteProject)
+
+export default router
+```
+
+---
+
+## Example MVC Flow
+
+1. **Router** receives a request to `/projects`.
+2. **Controller** (`ProjectController`) processes the request.
+3. **Model** (`Project` Mongoose model) interacts with the database.
+4. **View** (React frontend) displays the data to the user.
+
+---
+
+## Contributing
+
+Feel free to fork this repo and submit pull requests!
+
+---
+
+## License
+
+MIT
