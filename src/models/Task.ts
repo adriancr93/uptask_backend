@@ -25,7 +25,7 @@ export const TaskSchema: Schema = new Schema({
     },
     description: {
         type: String,
-        required: false,
+        required: true,
         trim: true
     },
     project: {
