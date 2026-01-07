@@ -165,6 +165,45 @@ export default router
 
 ---
 
+## Nested Resource Routing
+
+### What is it and its Advantages?
+
+**Nested Resource Routing** is a design pattern for building URLs in APIs, especially RESTful APIs, where hierarchical relationships between resources are expressed in the URL structure. This pattern is very common in web and mobile applications that handle related data as resources.
+
+#### Advantages
+
+- Example: `/projects/:projectId/tasks`
+- Ensures the project exists
+- Checks if the user has permissions
+- Allows creating tasks within a specific project
+
+### Middleware Implementation
+
+Middleware helps organize your routes and apply this URL design pattern.
+
+Because middleware runs on HTTP requests before the controller, it is a great place to perform actions such as verifying if a project exists or if the user has permission to access it.
+
+```typescript
+// Example: Middleware to check if project exists
+import { Request, Response, NextFunction } from 'express'
+import Project from '../models/Project'
+
+export const checkProjectExists = async (req: Request, res: Response, next: NextFunction) => {
+  const { projectId } = req.params
+  const project = await Project.findById(projectId)
+  if (!project) {
+    return res.status(404).json({ message: 'Project not found' })
+  }
+  next()
+}
+
+// Usage in routes
+router.post('/projects/:projectId/tasks', checkProjectExists, TaskController.createTask)
+```
+
+---
+
 ## Contributing
 
 Feel free to fork this repo and submit pull requests!
