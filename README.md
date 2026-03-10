@@ -202,14 +202,13 @@ export const checkProjectExists = async (req: Request, res: Response, next: Next
 router.post('/projects/:projectId/tasks', checkProjectExists, TaskController.createTask)
 ```
 
----
 
-## Contributing
+### Account Creation Algorithm
 
-Feel free to fork this repo and submit pull requests!
+Users must be unique; usually, to create an account, the user's email is requested.
 
----
+Passwords must always be hashed.
 
-## License
+A good way to avoid accumulating inactive users is to send a verification link to the user's email, and then the user must perform some action (also possible with a credit card or phone number).
 
-MIT
+Once the user creates their account and confirms it, they can use the app.
