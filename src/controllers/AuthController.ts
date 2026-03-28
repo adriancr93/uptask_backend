@@ -37,8 +37,27 @@ export class AuthController {
 
             res.send('User created successfully, check your email to confirm your account')
         } catch (error) {
-            console.error(error)
             res.status(500).json({error: 'Error creating account'})
+        }
+    }
+
+    static confirmAccount = async (req: Request, res: Response) => {
+        try {
+            const { token } = req.body
+
+            const tokenExists = await Token.findOne({token})
+            if(!tokenExists) {
+                const error = new Error('Invalid token')
+                return res.status(401).json({error: error.message})
+            }
+
+            const user = await User.findById(tokenExists.user)
+            user.confirmed = true
+            await Promise.allSettled([ user.save(), tokenExists.deleteOne()])
+            
+            res.send('Account confirmed successfully')
+        } catch (error) {
+            res.status(500).json({error: 'Error confirming account'})
         }
     }
 }
