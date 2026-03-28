@@ -27,16 +27,17 @@ export class AuthController {
             token.token = generateToken()
             token.user = user._id
 
-            //Send email with token (omitted for brevity, use nodemailer or similar)
-            AuthEmail.sendConfirmationEmail({
+            await Promise.all([user.save(), token.save()])
+
+            await AuthEmail.sendConfirmationEmail({
                 email: user.email,
                 name: user.name,
                 token: token.token
             })
 
-            await Promise.allSettled([user.save(), token.save()])
             res.send('User created successfully, check your email to confirm your account')
         } catch (error) {
+            console.error(error)
             res.status(500).json({error: 'Error creating account'})
         }
     }

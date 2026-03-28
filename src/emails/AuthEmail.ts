@@ -20,13 +20,9 @@ export class AuthEmail {
                <p> and insert the token: <b>${user.token}</b></p>
                <p> This token expire in 10 minutes</p>
             `
-        }).then(info => {
-            console.log('Email sent:', info.messageId);
-            return ({ success: true, info });
-        }).catch(error => {
-            console.error('Error sending email:', error);
-            return ({ success: false, error: error.message });
-        });
+        })
+
+        console.log('Message sent: %s', info.messageId)
 
     }
 }

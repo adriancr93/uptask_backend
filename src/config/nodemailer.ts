@@ -4,12 +4,25 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const config = () => {
+    const host = process.env.SMTP_HOST?.trim()
+    const port = Number(process.env.SMTP_PORT)
+    const user = process.env.SMTP_USER?.trim()
+    const pass = process.env.SMTP_PASS?.trim()
+
+    if (!host || !port || !user || !pass) {
+        throw new Error('Missing SMTP configuration')
+    }
+
     return {
-        host: "sandbox.smtp.mailtrap.io",
-        port: 2525,
+        host,
+        port,
+        secure: false,
+        connectionTimeout: 5000,
+        greetingTimeout: 5000,
+        socketTimeout: 5000,
         auth: {
-            user: "210206bac3d50b",
-            pass: "cc26ce2e294882"
+            user,
+            pass
         }
     }
 }
