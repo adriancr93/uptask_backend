@@ -14,7 +14,7 @@ export class AuthController {
             //Prevent duplicate
             const userExists = await User.findOne({email})
             if(userExists) {
-                return res.status(409).json({error: 'Email already in use'})
+                return res.status(409).json({ error: 'Email already in use' })
             }
 
             const user = new User(req.body)
@@ -48,7 +48,7 @@ export class AuthController {
             const tokenExists = await Token.findOne({token})
             if(!tokenExists) {
                 const error = new Error('Invalid token')
-                return res.status(404).json({error: error.message})
+                return res.status(404).json({ error: error.message })
             }
 
             const user = await User.findById(tokenExists.user)
@@ -108,12 +108,12 @@ export class AuthController {
             const user = await User.findOne({email})
             if(!user) {
                 const error = new Error('User not found')
-                return res.status(404).json({error: error.message})
+                return res.status(404).json({ error: error.message })
             }
 
             if(user.confirmed) {
                 const error = new Error('Account already confirmed')
-                return res.status(409).json({error: error.message})
+                return res.status(409).json({ error: error.message })
             }
 
             //Generate confirmation token
@@ -132,7 +132,7 @@ export class AuthController {
 
             res.send('Send new token again')
         } catch (error) {
-            res.status(500).json({error: 'Error creating account'})
+            res.status(500).json({ error: 'Error creating account' })
         }
     }
 }
