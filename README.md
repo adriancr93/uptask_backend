@@ -212,3 +212,12 @@ Passwords must always be hashed.
 A good way to avoid accumulating inactive users is to send a verification link to the user's email, and then the user must perform some action (also possible with a credit card or phone number).
 
 Once the user creates their account and confirms it, they can use the app.
+
+### Password Reset Algorithm
+
+The first check we need to perform is to determine whether the user exists or not.
+
+If the user exists, a token is sent that expires in 15 minutes.
+
+The token is sent by email, and the user must visit a link and enter that token; if the token is valid, we allow them to reset their password.
+
