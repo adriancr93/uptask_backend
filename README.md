@@ -278,3 +278,7 @@ HMACSHA256(
 - **Stateless:** JWTs are stateless, meaning the information needed to authenticate and authorize a user is contained directly in the token. This eliminates the need to store session information on the server, making it easier to scale distributed applications.
 
 In summary, JWT provides a secure and efficient mechanism for transmitting information between two parties, authenticating users, and authorizing access to protected resources in web applications and API services. Its compact nature, security, and ease of use make it a popular choice for implementing authentication and authorization systems.
+
+NPM command
+npm i jsonwebtoken
+npm i -D @types/jsonwebtoken

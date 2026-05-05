@@ -4,6 +4,7 @@ import { checkPassword, hashPassword } from '../utils/auth'
 import Token from '../models/Token'
 import { generateToken } from '../utils/token'
 import { AuthEmail } from '../emails/AuthEmail'
+import { generateJWT } from '../utils/jwt'
 
 export class AuthController {
     
@@ -76,7 +77,7 @@ export class AuthController {
                 token.token = generateToken()
                 await token.save()
 
-                await AuthEmail.sendConfirmationEmail({
+                AuthEmail.sendConfirmationEmail({
                     email: user.email,
                     name: user.name,
                     token: token.token
@@ -92,8 +93,10 @@ export class AuthController {
                 const error = new Error('Incorrect password')
                 return res.status(401).json({error: error.message})
             }
-
-            res.send('Logged in successfully')
+            
+            const token = generateJWT({id: user._id.toString()})
+            
+            res.send({ token })
 
         } catch (error) {
             res.status(500).json({error: 'Error logging in'})
