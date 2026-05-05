@@ -221,3 +221,60 @@ If the user exists, a token is sent that expires in 15 minutes.
 
 The token is sent by email, and the user must visit a link and enter that token; if the token is valid, we allow them to reset their password.
 
+
+### JSON Web Tokens
+
+What is it?
+
+A JSON Web Token (JWT) is an open standard that defines a compact and secure way to transmit information between two parties as a JSON object.
+
+It consists of three parts:
+
+1. Header
+2. Payload
+3. Signature
+
+#### Example of each part
+
+**Header**
+
+```json
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
+
+**Payload**
+
+```json
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "admin": true,
+  "iat": 1516239022
+}
+```
+
+**Signature**
+
+The signature is created using the encoded header, encoded payload, a secret, and the algorithm specified in the header:
+
+```
+HMACSHA256(
+  base64UrlEncode(header) + "." + base64UrlEncode(payload),
+  secret
+)
+```
+
+#### Advantages of JSON Web Token
+
+- **Security:** JWT uses digital signature algorithms to ensure that the data has not been tampered with during transmission. This guarantees the integrity of the information and allows parties to trust its validity.
+
+- **Authentication and Authorization:** JWT is commonly used to authenticate users and allow them to access protected resources. Once a user is successfully authenticated, they are provided with a JWT containing information about their permissions and roles. The server can verify the validity of the token and authorize or restrict access.
+
+- **Efficient Data Transfer:** JWT is a compact format that can be easily transmitted through different means, such as HTTP headers, URLs, or even in the body of an HTTP request. This makes it suitable for use in web applications and API services.
+
+- **Stateless:** JWTs are stateless, meaning the information needed to authenticate and authorize a user is contained directly in the token. This eliminates the need to store session information on the server, making it easier to scale distributed applications.
+
+In summary, JWT provides a secure and efficient mechanism for transmitting information between two parties, authenticating users, and authorizing access to protected resources in web applications and API services. Its compact nature, security, and ease of use make it a popular choice for implementing authentication and authorization systems.
