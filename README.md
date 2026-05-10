@@ -282,3 +282,31 @@ In summary, JWT provides a secure and efficient mechanism for transmitting infor
 NPM command
 npm i jsonwebtoken
 npm i -D @types/jsonwebtoken
+
+### Authentication and Authorization
+
+What are they? How do they differ?
+
+Authentication and authorization are two fundamental processes in the security of systems and applications. They are often confused, but they have different purposes.
+
+#### Authentication
+
+What is it?
+
+It is the process of verifying the identity of a user or entity. It is about making sure that the user is really who they say they are.
+
+This is typically done through credentials such as usernames and passwords, security tokens, biometric recognition (such as fingerprints or facial recognition), among others.
+
+Authentication answers the question: "Are you really who you say you are?"
+
+#### Authorization
+
+What is it?
+
+Once the user's identity has been verified through authentication, authorization is the process of determining whether they should be allowed to access resources or perform certain actions.
+
+This involves checking their permissions and roles in the system. For example, in a company, an employee may be authenticated (the system knows who they are) but may or may not be authorized to access certain files or applications, depending on their assigned role or permissions.
+
+Authorization answers the question: "Do you have permission to do this?"
+
+In summary, authentication is about verifying who you are, while authorization is about what you are allowed to do.
