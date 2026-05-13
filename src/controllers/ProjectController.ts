@@ -8,7 +8,6 @@ export class ProjectController {
 
         //Assign manager
         project.manager = req.user._id
-
         try {
             await project.save();
             res.send('Project created successfully');
@@ -17,10 +16,13 @@ export class ProjectController {
         }
     }
 
-
     static getAllProjects = async (req: Request, res: Response) => {
         try {
-            const projects = await Project.find({});
+            const projects = await Project.find({
+                $or: [
+                    {manager: {$in: req.user._id}}
+                ]
+            });
             res.json(projects);
         } catch (error) {
             console.log(error);
@@ -29,12 +31,16 @@ export class ProjectController {
 
     static getProjectById = async (req: Request, res: Response) => {
         const { id } = req.params;
-
         try {
             const project = await Project.findById(id).populate('tasks');
             if (!project) {
                 return res.status(404).json({ message: 'Project not found' });
             }
+
+            if (project.manager.toString() !== req.user._id.toString()) {
+                return res.status(403).json({ message: 'Access denied' });
+            }
+
             res.json(project);
         } catch (error) {
             console.log(error);
@@ -43,16 +49,21 @@ export class ProjectController {
 
     static updateProject = async (req: Request, res: Response) => {
         const { id } = req.params;
-
         try {
             const project = await Project.findById(id)
 
             if (!project) {
                 return res.status(404).json({ message: 'Project not found' });
             }
+
+            if (project.manager.toString() !== req.user._id.toString()) {
+                return res.status(403).json({ message: 'Just the manager can update the project' });
+            }
+
             project.projectName = req.body.projectName;
             project.clientName = req.body.clientName;
             project.description = req.body.description;
+
             await project.save();
             res.send('Project updated successfully');
         } catch (error) {
@@ -62,12 +73,15 @@ export class ProjectController {
 
     static deleteProject = async (req: Request, res: Response) => {
         const { id } = req.params;
-
         try {
             const project = await Project.findById(id);
 
             if (!project) {
                 return res.status(404).json({ message: 'Project not found' });
+            }
+
+            if (project.manager.toString() !== req.user._id.toString()) {
+                return res.status(403).json({ message: 'Just the manager can delete the project' });
             }
 
             await project.deleteOne();
