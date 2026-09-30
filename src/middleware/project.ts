@@ -14,7 +14,7 @@ export async function projectExists( req: Request, res: Response, next: NextFunc
         const { projectId } = req.params;
         const project = await Project.findById(projectId);
         if (!project) {
-            return res.status(404).json({ message: 'Project not found' });
+            return res.status(404).json({ error: 'Project not found' });
         }
         req.project = project; // Attach the project to the request object for further use
         next()
