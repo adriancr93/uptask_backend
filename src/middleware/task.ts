@@ -14,7 +14,7 @@ export async function taskExists( req: Request, res: Response, next: NextFunctio
         const { taskId } = req.params;
         const task = await Task.findById(taskId);
         if (!task) {
-            return res.status(404).json({ message: 'Task not found' });
+            return res.status(404).json({ error: 'Task not found' });
         }
         req.task = task; // Attach the task to the request object for further use
         next()

@@ -12,7 +12,7 @@ export class ProjectController {
             await project.save();
             res.send('Project created successfully');
         } catch (error) {
-            console.log(error);
+            res.status(500).json({ error: 'Error creating project' });
         }
     }
 
@@ -25,7 +25,7 @@ export class ProjectController {
             });
             res.json(projects);
         } catch (error) {
-            console.log(error);
+            res.status(500).json({ error: 'Error fetching projects' });
         }
     }
 
@@ -34,16 +34,16 @@ export class ProjectController {
         try {
             const project = await Project.findById(id).populate('tasks');
             if (!project) {
-                return res.status(404).json({ message: 'Project not found' });
+                return res.status(404).json({ error: 'Project not found' });
             }
 
             if (project.manager.toString() !== req.user._id.toString()) {
-                return res.status(403).json({ message: 'Access denied' });
+                return res.status(403).json({ error: 'Access denied' });
             }
 
             res.json(project);
         } catch (error) {
-            console.log(error);
+            res.status(500).json({ error: 'Error fetching project' });
         }
     }
 
@@ -53,11 +53,11 @@ export class ProjectController {
             const project = await Project.findById(id)
 
             if (!project) {
-                return res.status(404).json({ message: 'Project not found' });
+                return res.status(404).json({ error: 'Project not found' });
             }
 
             if (project.manager.toString() !== req.user._id.toString()) {
-                return res.status(403).json({ message: 'Just the manager can update the project' });
+                return res.status(403).json({ error: 'Just the manager can update the project' });
             }
 
             project.projectName = req.body.projectName;
@@ -67,7 +67,7 @@ export class ProjectController {
             await project.save();
             res.send('Project updated successfully');
         } catch (error) {
-            console.log(error);
+            res.status(500).json({ error: 'Error updating project' });
         }
     }
 
@@ -77,17 +77,17 @@ export class ProjectController {
             const project = await Project.findById(id);
 
             if (!project) {
-                return res.status(404).json({ message: 'Project not found' });
+                return res.status(404).json({ error: 'Project not found' });
             }
 
             if (project.manager.toString() !== req.user._id.toString()) {
-                return res.status(403).json({ message: 'Just the manager can delete the project' });
+                return res.status(403).json({ error: 'Just the manager can delete the project' });
             }
 
             await project.deleteOne();
             res.send('Project deleted successfully');
         } catch (error) {
-            console.log(error);
+            res.status(500).json({ error: 'Error deleting project' });
         }
     }
 
