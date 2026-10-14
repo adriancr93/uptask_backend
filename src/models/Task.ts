@@ -62,7 +62,7 @@ export const TaskSchema: Schema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Note'
         }
-    ]
+    ]   
 }, {timestamps: true})
 
 const Task = mongoose.model<ITask>('Task', TaskSchema);
