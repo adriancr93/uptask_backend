@@ -69,4 +69,28 @@ router.get('/user',
     AuthController.user
 )
 
+/** Profile */
+
+router.put('/profile', 
+    authenticate,
+    body('name').notEmpty().withMessage('Name is required'),
+    body('email').isEmail().withMessage('Email is not valid'),
+    handledinputErrors,
+    AuthController.updateProfile
+)
+
+router.post('/update-password',
+    authenticate,
+    body('current_password').notEmpty().withMessage('Current password is required'),
+    body('password').isLength({min: 8}).withMessage('Password must be at least 8 characters'),
+    body('password_confirmation').custom((value, {req}) => {
+        if(value !== req.body.password) {
+            throw new Error('Passwords do not match');
+        }
+        return true
+    }),
+    handledinputErrors,
+    AuthController.updateCurrentUserPassword
+)
+
 export default router;
